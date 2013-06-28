@@ -27,7 +27,7 @@
     NSTimeInterval negative_eighteen_years_in_seconds = -1 * 60 * 60 * 24 * 365 * 18;
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow:negative_eighteen_years_in_seconds];
     
-    NSString *string = [NSString stringWithFormat:@"http://live.hyprmx.com/embedded_videos/catalog_frame?uid=%@&distributorid=7172365&offer=video-0369253220a291d9b28345ef4b05aa09&dob=%@", [[NSProcessInfo processInfo] globallyUniqueString], [formatter stringFromDate:date]];
+    NSString *string = [NSString stringWithFormat:@"https://live.hyprmx.com/embedded_videos/catalog_frame?uid=%@&distributorid=7172365&offer=video-0369253220a291d9b28345ef4b05aa09&dob=%@", [[NSProcessInfo processInfo] globallyUniqueString], [formatter stringFromDate:date]];
     
     NSLog(@"Loading: %@", string);
     
