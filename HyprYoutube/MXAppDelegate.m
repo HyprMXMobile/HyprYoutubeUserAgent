@@ -14,6 +14,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Set user agent
+    NSString* modelString = [[[UIDevice currentDevice].model componentsSeparatedByString:@" "] objectAtIndex:0];// iPhone, iPad, or iPod
+    NSString* versionString = [[[UIDevice currentDevice] systemVersion] stringByReplacingOccurrencesOfString:@"." withString:@"_"]; // 5_1
+    NSString* webkitBuildNumber = @"534.46";
+    NSString* safariFamilyVersion = [[UIDevice currentDevice] systemVersion];
+    NSString* buildNumber = @"9B176";
+    NSString* safariVersionNumber = @"7534.48.3";
+    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 [NSString stringWithFormat:@"Mozilla/5.0 (%@; CPU OS %@ like Mac OS X) AppleWebKit/%@ (KHTML, like Gecko) Version/%@ Mobile/%@ Safari/%@",
+                                  modelString, versionString, webkitBuildNumber, safariFamilyVersion, buildNumber, safariVersionNumber],
+                                 @"UserAgent", nil];
+    NSLog(@"Settings: %@", dictionary);
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
