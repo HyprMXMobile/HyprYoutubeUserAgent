@@ -14,16 +14,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSDictionary* plist = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"user-agents" ofType:@"plist"]];
+    
     // Set user agent
     NSString* modelString = [[[UIDevice currentDevice].model componentsSeparatedByString:@" "] objectAtIndex:0];// iPhone, iPad, or iPod
     NSString* versionString = [[[UIDevice currentDevice] systemVersion] stringByReplacingOccurrencesOfString:@"." withString:@"_"]; // 5_1
-    NSString* webkitBuildNumber = @"534.46";
-    NSString* safariFamilyVersion = [[UIDevice currentDevice] systemVersion];
-    NSString* buildNumber = @"9B176";
-    NSString* safariVersionNumber = @"7534.48.3";
+    NSString* ua = [[plist valueForKey:modelString] valueForKey:versionString];
+    
+    if (nil == ua) {
+        [NSException raise:@"No User Agent" format:@"For Device: %@, Version: %@", modelString, versionString];
+    }
+    
     NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                 [NSString stringWithFormat:@"Mozilla/5.0 (%@; CPU OS %@ like Mac OS X) AppleWebKit/%@ (KHTML, like Gecko) Version/%@ Mobile/%@ Safari/%@",
-                                  modelString, versionString, webkitBuildNumber, safariFamilyVersion, buildNumber, safariVersionNumber],
+                                 ua,
                                  @"UserAgent", nil];
     NSLog(@"Settings: %@", dictionary);
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
